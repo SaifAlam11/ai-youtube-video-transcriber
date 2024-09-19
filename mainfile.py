@@ -1,5 +1,5 @@
 import streamlit as st
-import youtube_dl
+import yt_dlp as youtube_dl
 import requests
 import pprint
 from configure import auth_key
