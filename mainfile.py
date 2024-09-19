@@ -1,35 +1,35 @@
-import yt_dlp as youtube_dl
+
 import streamlit as st
+import youtube_dl
 import requests
+import pprint
 from configure import auth_key
 from time import sleep
-import pprint
 
 if 'status' not in st.session_state:
     st.session_state['status'] = 'submitted'
 
 ydl_opts = {
-    'format': 'bestaudio/best',
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',
-    }],
-    'ffmpeg-location': './',
-    'outtmpl': "./%(extractor)s.%(ext)s",
+   'format': 'bestaudio/best',
+   'postprocessors': [{
+       'key': 'FFmpegExtractAudio',
+       'preferredcodec': 'mp3',
+       'preferredquality': '192',
+   }],
+   'ffmpeg-location': './',
+   'outtmpl': "./%(id)s.%(ext)s",
 }
 
 transcript_endpoint = "https://api.assemblyai.com/v2/transcript"
 upload_endpoint = 'https://api.assemblyai.com/v2/upload'
+
 headers_auth_only = {'authorization': auth_key}
 headers = {
-    "authorization": auth_key,
-    "content-type": "application/json"
+   "authorization": auth_key,
+   "content-type": "application/json"
 }
-
 CHUNK_SIZE = 5242880
-
-
+ 
 @st.cache
 def transcribe_from_link(link, categories: bool):
 	_id = link.strip()
@@ -108,3 +108,6 @@ if st.session_state['status']=='completed':
 st.markdown(transcript)
 
 
+
+
+ 
